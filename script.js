@@ -39,7 +39,7 @@ if (window.location.host === 'accounts.google.com') {
 
 // Live Control
 function initLiveControl() {
-  console.log('And we are live!');
+  console.log('We are live!');
   if (window.location.host !== '127.0.0.1:8080') {
     const socket = new WebSocket('ws://192.168.86.232:8082');
 
