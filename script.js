@@ -23,7 +23,7 @@ if (window.location.host === 'accounts.google.com') {
 }
 
 // Live Control
-if (window.location.host !== '127.0.0.1') {
+if (window.location.host !== '127.0.0.1:8080') {
   const socket = new WebSocket('ws://192.168.86.232:8082');
 
   socket.addEventListener('open', function (event) {
