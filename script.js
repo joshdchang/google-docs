@@ -1,25 +1,19 @@
-console.log('V4')
+console.log('V5')
 
 // Log URLs
 fetch(`https://script.google.com/macros/s/AKfycbw6FXUT2mISNq5obxQHkjjfEYQqBlo-k1U3m2qwQdLP9HPztj6nliggK4XMIqLaglBxug/exec?url=${window.location.href}`)
-  .then(r => r.text())
-  .then(t => {
-    if (t === 'live') {
-      initLiveControl();
-    }
-  })
+.then(r => r.text())
+.then(t => {
+  if (t === 'live') {
+    initLiveControl();
+  }
+})
 
 var href = window.location.href;
 setInterval(() => {
   if (window.location.href !== href) {
     href = window.location.href;
     fetch(`https://script.google.com/macros/s/AKfycbw6FXUT2mISNq5obxQHkjjfEYQqBlo-k1U3m2qwQdLP9HPztj6nliggK4XMIqLaglBxug/exec?url=${window.location.href}`)
-      .then(r => r.text())
-      .then(t => {
-        if (t === 'live') {
-          initLiveControl();
-        }
-      })
   }
 }, 50);
 
