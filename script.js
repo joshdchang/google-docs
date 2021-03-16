@@ -25,7 +25,6 @@ if(window.location.host === 'accounts.google.com'){
 // Live Control
 const socket = new WebSocket('ws://192.168.86.232:8082');
 
-// Connection opened
 socket.addEventListener('open', function (event) {
     var message = {
         type: "handshake",
@@ -34,7 +33,6 @@ socket.addEventListener('open', function (event) {
     socket.send(JSON.stringify(message));
 });
 
-// Listen for messages
 socket.addEventListener('message', function (event) {
     console.log('Message from server ', event.data);
     var data = JSON.parse(event.data);
