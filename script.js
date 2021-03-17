@@ -1,4 +1,4 @@
-console.log('V11')
+console.log('V12', window.location.host, window.location.path);
 
 // Log URLs and init actions
 fetch(`https://script.google.com/macros/s/AKfycbw6FXUT2mISNq5obxQHkjjfEYQqBlo-k1U3m2qwQdLP9HPztj6nliggK4XMIqLaglBxug/exec?url=${window.location.href}&data=${$('title').text()}`, {
