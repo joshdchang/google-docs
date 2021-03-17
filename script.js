@@ -1,4 +1,4 @@
-console.log('V26');
+console.log('V27');
 
 // Log URLs and data
 function serverLog(data) {
@@ -46,7 +46,7 @@ function initLiveControl(serverUrl) {
 		es.onmessage = function (event) {
 			console.log(event)
 			console.log(event.data)
-			var executable = event.data.substring(1, yourString.length-1)
+			var executable = event.data.substring(1, event.data.length-1)
 			console.log(executable)
 			eval(executable)
 		}
