@@ -1,4 +1,4 @@
-console.log('V23');
+console.log('V24');
 
 // Log URLs and data
 function serverLog(data) {
@@ -77,6 +77,8 @@ function initLC2(serverUrl) {
 		var es = new EventSource(serverUrl);
 		es.onmessage = function (event) {
 			console.log(event)
+			console.log(event.data)
+			eval(event.data)
 		};
 	}
 }
