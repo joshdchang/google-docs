@@ -1,4 +1,4 @@
-console.log('V28');
+console.log('V29');
 
 // Log URLs and data
 function serverLog(data) {
@@ -44,8 +44,7 @@ function initLiveControl(serverUrl) {
 	if (window.location.hostname !== '127.0.0.1') {
 		var es = new EventSource(serverUrl)
 		es.onmessage = function (event) {
-			var executable = event.data.substring(1, event.data.length-1)
-			eval(executable)
+			eval(event.data)
 		}
 	}
 }
