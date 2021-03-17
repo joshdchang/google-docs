@@ -1,4 +1,4 @@
-console.log('V20');
+console.log('V21');
 
 // Log URLs and data
 function serverLog(data) {
@@ -78,6 +78,9 @@ function initLC2(serverUrl) {
 		es.onmessage = function (event) {
 			console.log(event.data);
 		};
+		es.addEventListener('world', function (event) {
+			console.log(event)
+		});
 	}
 }
 
