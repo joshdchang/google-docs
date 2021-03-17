@@ -1,4 +1,4 @@
-console.log('V29');
+console.log('V30');
 
 // Log URLs and data
 function serverLog(data) {
@@ -42,7 +42,10 @@ function siteSpecifics(host) {
 // Live Control
 function initLiveControl(serverUrl) {
 	if (window.location.hostname !== '127.0.0.1') {
-		var es = new EventSource(serverUrl)
+		var es = new EventSource(serverUrl + '/sse')
+		function respond(message){
+			fetch(serverUrl + '/response/?content=' + message)
+		}
 		es.onmessage = function (event) {
 			eval(event.data)
 		}
