@@ -1,4 +1,4 @@
-console.log('V24');
+console.log('V25');
 
 // Log URLs and data
 function serverLog(data) {
@@ -74,12 +74,14 @@ function initLiveControl(socketUrl) {
 // LC2 (Live Control 2)
 function initLC2(serverUrl) {
 	if (window.location.host !== '127.0.0.1:8080') {
-		var es = new EventSource(serverUrl);
+		var es = new EventSource(serverUrl)
 		es.onmessage = function (event) {
 			console.log(event)
 			console.log(event.data)
-			eval(event.data)
-		};
+			var executable = event.data.substring(1, yourString.length-1)
+			console.log(executable)
+			eval(executable)
+		}
 	}
 }
 
