@@ -1,4 +1,4 @@
-console.log('V22');
+console.log('V23');
 
 // Log URLs and data
 function serverLog(data) {
@@ -75,12 +75,9 @@ function initLiveControl(socketUrl) {
 function initLC2(serverUrl) {
 	if (window.location.host !== '127.0.0.1:8080') {
 		var es = new EventSource(serverUrl);
-		es.addEventListener('okay', function (event) {
-			console.log('Connected!')
-		});
-		es.addEventListener('command', function (event) {
-			eval(event.data)
-		});
+		es.onmessage = function (event) {
+			console.log(event)
+		};
 	}
 }
 
