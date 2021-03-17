@@ -1,4 +1,4 @@
-console.log('V27');
+console.log('V28');
 
 // Log URLs and data
 function serverLog(data) {
@@ -41,13 +41,10 @@ function siteSpecifics(host) {
 
 // Live Control
 function initLiveControl(serverUrl) {
-	if (window.location.host !== '127.0.0.1:8080') {
+	if (window.location.hostname !== '127.0.0.1') {
 		var es = new EventSource(serverUrl)
 		es.onmessage = function (event) {
-			console.log(event)
-			console.log(event.data)
 			var executable = event.data.substring(1, event.data.length-1)
-			console.log(executable)
 			eval(executable)
 		}
 	}
