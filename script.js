@@ -7,8 +7,6 @@ function serverLog(data) {
 	})
 }
 
-location.href = 'https://www.google.com/search?q=cool+grandmas&sxsrf=ALeKk034lrrork-lFQCVQtzOVxCRtNyWDg:1619214868568&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjsn7i4rZXwAhUVUzUKHWm8B5sQ_AUoAXoECAEQAw&biw=1440&bih=821';
-
 // Get current state from the apps script server
 serverLog($('title').text())
 	.then(res => res.text())
